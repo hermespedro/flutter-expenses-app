@@ -1,6 +1,6 @@
 # finances_app
 
-A new Flutter project.
+This is a finance application project in purpose to learn more about flutter.
 
 ## Getting Started
 
