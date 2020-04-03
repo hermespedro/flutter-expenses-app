@@ -1,6 +1,6 @@
-# finances_app
+# expenses_app
 
-This is a finance application project in purpose to learn more about flutter.
+This is a expenses app project in purpose to learn more about flutter.
 
 ## Getting Started
 
