@@ -1,19 +1,32 @@
+import 'package:finances_app/models/transaction.dart';
 import 'package:flutter/material.dart';
-
 
 void main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage()
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: MyHomePage());
   }
 }
 
 class MyHomePage extends StatelessWidget {
+
+  final _transactions = [
+    Transaction(
+      id: 't1',
+      title: 'Tênis de Adidas Skateboarding',
+      value: 299.76,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: 't1',
+      title: 'Camisa Nike SB',
+      value: 99.97,
+      date: DateTime.now(),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +38,18 @@ class MyHomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            width: double.infinity ,
-            height: 150,
+            width: double.infinity,
             child: Card(
               child: Text('part One'),
               elevation: 3,
             ),
           ),
-          Card(
-            child: Text("Part two - List"),
+          Column(
+            children: _transactions.map((tr) {
+              return Card(
+                child: Text(tr.title),
+              );
+            }).toList(),
           ),
         ],
       ),
