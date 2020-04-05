@@ -13,7 +13,32 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: ListView.builder(
+      child: transactions.isEmpty ? Column (
+     
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          Text("Nenhuma Despesa Cadastrada",
+          style: TextStyle(
+            fontSize: 14,
+            fontFamily: 'Montserrat',
+            color: Color(0xffE6E6E6),
+            fontWeight: FontWeight.w800
+          ),
+          
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 200,
+            child: Image.asset('assets/images/bg1.png',
+            fit: BoxFit.cover, 
+            ),
+          ),
+        ],
+      ): ListView.builder(
         itemCount: transactions.length,
         itemBuilder: (ct, index){
            final tr = transactions[index];
@@ -28,7 +53,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.black38,
+                        color: Color(0XFF1111111),
                         width: 2
                       ),
                     ),
@@ -36,7 +61,7 @@ class TransactionList extends StatelessWidget {
                     child: Text(
                       "R\$ ${tr.value.toStringAsFixed(2)}",
                       style: TextStyle(
-                        color:Colors.black54,
+                        color:Color(0XFF1111111),
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
                       ),
@@ -49,7 +74,7 @@ class TransactionList extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 16,
-                        color: Colors.black54
+                        color: Color(0XFF1111111),
                       ),
                       ),
                       Text(
