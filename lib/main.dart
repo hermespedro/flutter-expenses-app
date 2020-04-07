@@ -12,21 +12,25 @@ void main() => runApp(ExpensesApp());
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false,
-     home: MyHomePage(),
-     theme: ThemeData(
-       primaryColor: Color(0xff2F2E41),
-       fontFamily: 'BreeSerif',
-       appBarTheme: AppBarTheme(
-         textTheme: ThemeData.light().textTheme.copyWith(
-           title: TextStyle(fontFamily: 'Montserrat', 
-           fontSize: 16, 
-           fontWeight: FontWeight.w700,
-           letterSpacing:1,
-           ),
-         ),
-       ),
-     ),
+    
+ 
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+      theme: ThemeData(
+        primaryColor: Color(0xff212121),
+        fontFamily: 'Monterrat',
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                title: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1,
+                ),
+              ),
+        ),
+      ),
     );
   }
 }
@@ -37,36 +41,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List <Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Tênis da Adidas Skateboarding',
-      value: 299.76,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Camisa Nike SB',
-      value: 120.97,
-      date: DateTime.now(),
-    ),
-   
-  ];
+  final List<Transaction> _transactions = [];
 
-  List <Transaction> get _recentTransactions {
-    return _transactions.where((tr){
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
       return tr.date.isAfter(DateTime.now().subtract(
         Duration(days: 7),
       ));
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now().subtract(Duration(days: 4)),
+      date: date,
     );
 
     setState(() {
@@ -74,6 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   _opentransactionFormModal(BuildContext context) {
@@ -86,29 +82,51 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+
+    final  appBar = AppBar(
         //backgroundColor: Color(0xffeeeeee),
-        title: Text("Despesas Pessoais", 
-        style: TextStyle(
-          color: Color(0xfff3f3f3),
-        ),),
+        title: Text(
+          "Despesas Pessoais",
+          style: TextStyle(
+            color: Color(0xfff6f6f6),
+          ),
+        ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Color(0xfff3f3f3),
-                size: 30,
-              ),
-              onPressed: () => _opentransactionFormModal(context),
-              ),
+            icon: Icon(
+              Icons.add,
+              color: Color(0xfff3f3f3),
+              size: 30,
+            ),
+            onPressed: () => _opentransactionFormModal(context),
+          ),
         ],
-      ),
+      );
+
+    final alturaFinal = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_transactions),
+            // Switch(value: true, onChanged: (value){
+
+            // },),
+            Container(
+              height: alturaFinal * 0.3 ,
+              child: Chart(
+                _recentTransactions,
+              ),
+            ),
+            Container(
+              height: alturaFinal * 0.7,
+              child: TransactionList(
+                _transactions,
+                _removeTransaction,
+              ),
+            ),
           ],
         ),
       ),

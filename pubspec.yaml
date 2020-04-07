@@ -73,9 +73,6 @@ flutter:
   
 
   fonts:
-    - family: BreeSerif
-      fonts:
-        - asset: assets/fonts/BreeSerif-Regular.ttf
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Light.ttf
